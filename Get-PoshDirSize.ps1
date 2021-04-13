@@ -1,11 +1,12 @@
 ﻿# Variables
 $PoshDSPath = ''
-$DirTotalSize = $null
-$FileTotalSize = $null
 $PoshDSTotal = $null
 
 [System.Collections.Generic.List[Object]]$FileList = @()
 [System.Collections.Generic.List[Object]]$DirList = @()
+
+$File_Items = Get-ChildItem $PoshDSPath -File -Recurse
+$Dir_Items = Get-ChildItem $PoshDSPath -Directory -Recurse
 
 # Functions
 Function ConvertTo-FileSize {
@@ -74,4 +75,16 @@ function Add-ToDirList {
     }
 
     $DirList.Add($FolderObject)
+}
+
+foreach($Dir_Item in $Dir_Items){
+    $Dir_ChildItems = Get-ChildItem $Dir_Item.FullName -Recurse
+    $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
+    $Dir_Size = (ConvertTo-FileSize $Dir_Bytes)
+    Add-ToDirList $Dir_Item $Dir_Bytes $Dir_Size
+}
+
+foreach($File_Item in $File_Items){
+    $PoshDSTotal += $File_Item.Length
+    Add-ToFileList $File_Item
 }
