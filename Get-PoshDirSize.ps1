@@ -5,6 +5,7 @@ $FileTotalSize = $null
 $PoshDSTotal = $null
 
 [System.Collections.Generic.List[Object]]$FileList = @()
+[System.Collections.Generic.List[Object]]$DirList = @()
 
 # Functions
 Function ConvertTo-FileSize {
@@ -19,7 +20,7 @@ Function ConvertTo-FileSize {
 
 function Add-ToFileList {
     param(
-        [Parameter(Mandatory=$true)][System.IO.FileInfo]$ds_file_item
+        [Parameter(Mandatory=$true)][System.IO.FileInfo]$file_item
     )
 
     $FullPath         = $null        
@@ -28,11 +29,11 @@ function Add-ToFileList {
     $FileSize         = $null
     $FileName         = $null
 
-    $FullPath = $ds_file_item.FullName
-    $FileName = $ds_file_item.BaseName
+    $FullPath = $file_item.FullName
+    $FileName = $file_item.BaseName
 
-    $FileSizeReadable   = (ConvertTo-FileSize $ds_file_item.Length)
-    $FileSize           = $ds_file_item.Length
+    $FileSizeReadable   = (ConvertTo-FileSize $file_item.Length)
+    $FileSize           = $file_item.Length
 
     $FileObject = [PSCustomObject]@{
         PSTypeName    = 'PS.File.List.Result'
@@ -43,4 +44,34 @@ function Add-ToFileList {
     }
 
     $FileList.Add($FileObject)
+}
+
+function Add-ToDirList {
+    param(
+        [Parameter(Mandatory=$true)][System.IO.DirectoryInfo]$folder_item,
+        [Parameter(Mandatory=$true)][Double]$folder_item_bytes,
+        [Parameter(Mandatory=$true)][String]$folder_item_size
+    )
+
+    $FullPath           = $null        
+    $FolderObject       = $null
+    $FolderSizeReadable = $null
+    $FolderSize         = $null
+    $FolderName         = $null
+
+    $FullPath   = $folder_item.FullName
+    $FolderName = $folder_item.BaseName
+
+    $FolderSizeReadable   = $folder_item_size
+    $FolderSize           = $folder_item_bytes
+
+    $FolderObject = [PSCustomObject]@{
+        PSTypeName       = 'PS.File.List.Result'
+        FolderName       = $FolderName
+        SizeReadable     = $FolderSizeReadable
+        SizeInBytes      = $FolderSize
+        FullPath         = $FullPath
+    }
+
+    $DirList.Add($FolderObject)
 }
