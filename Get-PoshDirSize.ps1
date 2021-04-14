@@ -79,6 +79,7 @@ function Add-ToDirList {
     $DirList.Add($FolderObject)
 }
 
+# Dir_Item -> DirList
 foreach($Dir_Item in $Dir_Items){
     $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($Dir_Item.FullName)) -Recurse
     $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
@@ -86,6 +87,7 @@ foreach($Dir_Item in $Dir_Items){
     Add-ToDirList $Dir_Item $Dir_Bytes $Dir_Size
 }
 
+# File_Item -> FileList
 foreach($File_Item in $File_Items){
     $PoshDSTotal += $File_Item.Length
     Add-ToFileList $File_Item
@@ -96,11 +98,17 @@ If(!(Test-Path -Path $PoshDSOutPath)){
     New-Item -ItemType Directory -Force -Path $PoshDSOutPath
 }
 
+# DirList output to console and .log
 $DirList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FolderName, SizeReadable, SizeInBytes | Format-Table -AutoSize
 $DirList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+
+# FileList output to console and .log
 $FileList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FileName, SizeReadable, SizeInBytes | Format-Table -AutoSize
 $FileList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
 
-Write-Host "`n$($PoshDSPath)"
+# Grand Total output to console and .log
+Write-Host "`nPath: " -NoNewline -ForegroundColor Cyan
+$PoshDSPath
 Write-Host "Grand Total: " -NoNewline -ForegroundColor DarkYellow
 ConvertTo-FileSize $PoshDSTotal
+"Path: $($PoshDSPath)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000 
