@@ -1,5 +1,5 @@
 ﻿# Variables
-$PoshDSPath = ''
+$PoshDSPath = ([Management.Automation.WildcardPattern]::Escape(""))
 $PoshDSTotal = $null
 
 [System.Collections.Generic.List[Object]]$FileList = @()
@@ -78,7 +78,7 @@ function Add-ToDirList {
 }
 
 foreach($Dir_Item in $Dir_Items){
-    $Dir_ChildItems = Get-ChildItem $Dir_Item.FullName -Recurse
+    $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($Dir_Item.FullName)) -Recurse
     $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
     $Dir_Size = (ConvertTo-FileSize $Dir_Bytes)
     Add-ToDirList $Dir_Item $Dir_Bytes $Dir_Size
