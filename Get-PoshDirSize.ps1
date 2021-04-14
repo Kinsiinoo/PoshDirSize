@@ -1,5 +1,5 @@
 ﻿# Variables
-$PoshDSPath = ([Management.Automation.WildcardPattern]::Escape(""))
+$PoshDSPath = ([Management.Automation.WildcardPattern]::Escape("C:\"))
 $PoshDSOutPath = "C:\Temp\PoshDirSize\"
 $PoshDSTotal = $null
 $PoshDSRunTime = (Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
