@@ -7,6 +7,9 @@ $PoshDSRunTime = (Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
 [System.Collections.Generic.List[Object]]$FileList = @()
 [System.Collections.Generic.List[Object]]$DirList = @()
 
+# SW start
+$PoshDSSW = [Diagnostics.Stopwatch]::StartNew()
+
 $File_Items = Get-ChildItem $PoshDSPath -File -Recurse
 $Dir_Items = Get-ChildItem $PoshDSPath -Directory -Recurse
 
@@ -106,9 +109,17 @@ $DirList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$
 $FileList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FileName, SizeReadable, SizeInBytes | Format-Table -AutoSize
 $FileList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
 
-# Grand Total output to console and .log
+# SW stop
+$PoshDSSW.Stop()
+
+# Path, Grand Total, Elapsed time output to console and .log
 Write-Host "`nPath: " -NoNewline -ForegroundColor Cyan
 $PoshDSPath
+
 Write-Host "Grand Total: " -NoNewline -ForegroundColor DarkYellow
 ConvertTo-FileSize $PoshDSTotal
-"Path: $($PoshDSPath)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000 
+
+Write-Host "Elapsed time: " -NoNewline -ForegroundColor Magenta
+Write-Host "$($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)"
+
+"Path: $($PoshDSPath)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)`nElapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000 
