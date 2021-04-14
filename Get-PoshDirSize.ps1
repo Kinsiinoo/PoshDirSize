@@ -1,6 +1,8 @@
 ﻿# Variables
 $PoshDSPath = ([Management.Automation.WildcardPattern]::Escape(""))
+$PoshDSOutPath = "C:\Temp\PoshDirSize\"
 $PoshDSTotal = $null
+$PoshDSRunTime = (Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
 
 [System.Collections.Generic.List[Object]]$FileList = @()
 [System.Collections.Generic.List[Object]]$DirList = @()
@@ -89,8 +91,15 @@ foreach($File_Item in $File_Items){
     Add-ToFileList $File_Item
 }
 
-$DirList | Sort-Object -Property SizeInBytes -Descending | Format-Table -AutoSize
-$FileList | Sort-Object -Property SizeInBytes -Descending | Format-Table -AutoSize
+# Test Path and Create folder if it is not exist
+If(!(Test-Path -Path $PoshDSOutPath)){
+    New-Item -ItemType Directory -Force -Path $PoshDSOutPath
+}
+
+$DirList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FolderName, SizeReadable, SizeInBytes | Format-Table -AutoSize
+$DirList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+$FileList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FileName, SizeReadable, SizeInBytes | Format-Table -AutoSize
+$FileList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
 
 Write-Host "`n$($PoshDSPath)"
 Write-Host "Grand Total: " -NoNewline -ForegroundColor DarkYellow
