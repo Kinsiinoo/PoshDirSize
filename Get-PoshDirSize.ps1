@@ -89,8 +89,9 @@ foreach($File_Item in $File_Items){
     Add-ToFileList $File_Item
 }
 
+$DirList | Sort-Object -Property SizeInBytes -Descending | Format-Table -AutoSize
+$FileList | Sort-Object -Property SizeInBytes -Descending | Format-Table -AutoSize
+
 Write-Host "`n$($PoshDSPath)"
 Write-Host "Grand Total: " -NoNewline -ForegroundColor DarkYellow
 ConvertTo-FileSize $PoshDSTotal
-$DirList | Sort-Object -Property SizeInBytes -Descending | Format-Table -AutoSize
-$FileList | Sort-Object -Property SizeInBytes -Descending | Format-Table -AutoSize
