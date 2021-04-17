@@ -3,7 +3,10 @@
     param (
         [Parameter(Mandatory=$true,Position=0,
         HelpMessage="Enter the path to the folder you want to check.")]
-        [String]$PoshDSPath
+        [String]$PoshDSPath,
+        [Parameter(Position=1)]
+        [ValidateSet("Fast", "Slow")]
+        [String]$PoshDSMode = "Fast"
     )
 
     # Variables
@@ -89,18 +92,37 @@
         $DirList.Add($FolderObject)
     }
 
-    # Dir_Item -> DirList
-    foreach($Dir_Item in $Dir_Items){
-        $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($Dir_Item.FullName)) -Recurse
-        $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
-        $Dir_Size = (ConvertTo-FileSize $Dir_Bytes)
-        Add-ToDirList $Dir_Item $Dir_Bytes $Dir_Size
-    }
+    switch ($PoshDSMode) {
+        "Fast" {
+            # Dir_Item -> DirList
+            foreach($Dir_Item in $Dir_Items){
+                $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($Dir_Item.FullName)) -Recurse
+                $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
+                $Dir_Size = (ConvertTo-FileSize $Dir_Bytes)
+                Add-ToDirList $Dir_Item $Dir_Bytes $Dir_Size
+            }
 
-    # File_Item -> FileList
-    foreach($File_Item in $File_Items){
-        $PoshDSTotal += $File_Item.Length
-        Add-ToFileList $File_Item
+            # File_Item -> FileList
+            foreach($File_Item in $File_Items){
+                $PoshDSTotal += $File_Item.Length
+                Add-ToFileList $File_Item
+            }
+        }
+        "Slow" {
+            # Dir_Item -> DirList
+            $Dir_Items | ForEach-Object {
+                $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($_.FullName)) -Recurse
+                $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
+                $Dir_Size = (ConvertTo-FileSize $Dir_Bytes)
+                Add-ToDirList $_ $Dir_Bytes $Dir_Size
+            }
+
+            # File_Item -> FileList
+            $File_Items | ForEach-Object {
+                $PoshDSTotal += $_.Length
+                Add-ToFileList $_
+            }
+        }
     }
 
     # Test Path and Create folder if it is not exist
