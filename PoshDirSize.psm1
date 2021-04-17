@@ -21,8 +21,8 @@
     $PoshDSSW = [Diagnostics.Stopwatch]::StartNew()
 
     Write-Verbose "Getting files and folders..."
-    $File_Items = Get-ChildItem $PoshDSPath -File -Recurse
-    $Dir_Items = Get-ChildItem $PoshDSPath -Directory -Recurse
+    $File_Items = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -File -Recurse
+    $Dir_Items = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Directory -Recurse
 
     # Functions
     Function ConvertTo-FileSize {
@@ -149,7 +149,7 @@
     # Path, Grand Total, Elapsed time output to console and .log
     Write-Verbose "Outputting Path, Grand Total, Elapsed time to console and .log file..."
     Write-Host "`nPath: " -NoNewline -ForegroundColor Cyan
-    $PoshDSPath
+    ([Management.Automation.WildcardPattern]::Escape($PoshDSPath))
 
     Write-Host "Grand Total: " -NoNewline -ForegroundColor Yellow
     ConvertTo-FileSize $PoshDSTotal
@@ -157,6 +157,6 @@
     Write-Host "Elapsed time: " -NoNewline -ForegroundColor Magenta
     Write-Host "$($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)"
 
-    "Path: $($PoshDSPath)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)`nElapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    "Path: $(([Management.Automation.WildcardPattern]::Escape($PoshDSPath)))`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)`nElapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
     Write-Verbose "Completed!"
 }
