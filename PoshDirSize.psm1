@@ -20,6 +20,7 @@
     # SW start
     $PoshDSSW = [Diagnostics.Stopwatch]::StartNew()
 
+    Write-Verbose "Getting files and folders..."
     $File_Items = Get-ChildItem $PoshDSPath -File -Recurse
     $Dir_Items = Get-ChildItem $PoshDSPath -Directory -Recurse
 
@@ -94,6 +95,7 @@
 
     switch ($PoshDSMode) {
         "Fast" {
+            Write-Verbose "Mode: Fast"
             # Dir_Item -> DirList
             foreach($Dir_Item in $Dir_Items){
                 $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($Dir_Item.FullName)) -Recurse
@@ -109,6 +111,7 @@
             }
         }
         "Slow" {
+            Write-Verbose "Mode: Slow"
             # Dir_Item -> DirList
             $Dir_Items | ForEach-Object {
                 $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($_.FullName)) -Recurse
@@ -131,10 +134,12 @@
     }
 
     # DirList output to console and .log
+    Write-Verbose "Outputting DirList to console and .log file..."
     $DirList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FolderName, SizeReadable, SizeInBytes | Format-Table -AutoSize
     $DirList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
 
     # FileList output to console and .log
+    Write-Verbose "Outputting FileList to console and .log file..."
     $FileList | Sort-Object -Property SizeInBytes -Descending | Select-Object -Property FileName, SizeReadable, SizeInBytes | Format-Table -AutoSize
     $FileList | Sort-Object -Property SizeInBytes -Descending | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
 
@@ -142,14 +147,16 @@
     $PoshDSSW.Stop()
 
     # Path, Grand Total, Elapsed time output to console and .log
+    Write-Verbose "Outputting Path, Grand Total, Elapsed time to console and .log file..."
     Write-Host "`nPath: " -NoNewline -ForegroundColor Cyan
     $PoshDSPath
 
-    Write-Host "Grand Total: " -NoNewline -ForegroundColor DarkYellow
+    Write-Host "Grand Total: " -NoNewline -ForegroundColor Yellow
     ConvertTo-FileSize $PoshDSTotal
 
     Write-Host "Elapsed time: " -NoNewline -ForegroundColor Magenta
     Write-Host "$($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)"
 
-    "Path: $($PoshDSPath)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)`nElapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000 
+    "Path: $($PoshDSPath)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)`nElapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    Write-Verbose "Completed!"
 }
