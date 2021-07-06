@@ -96,6 +96,7 @@
     switch ($PoshDSMode) {
         "Fast (PS7)" {
             if ($PSVersionTable.PSVersion.Major -like "7") {
+                Write-Verbose "Mode: Fast (PS7)"
                 # Dir_Item -> DirList
                 $Dir_Items | ForEach-Object -Parallel {
                     $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($_.FullName)) -Recurse
