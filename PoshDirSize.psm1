@@ -109,7 +109,10 @@
                     $PoshDSTotal += $_.Length
                     Add-ToFileList $_
                 }
+            } else {
+                Write-Error "PowerShell 5 detected, switching to compatible fast mode!"
             }
+            Continue
         }
         "Fast" {
             Write-Verbose "Mode: Fast"
@@ -126,6 +129,7 @@
                 $PoshDSTotal += $File_Item.Length
                 Add-ToFileList $File_Item
             }
+            Break
         }
         "Slow" {
             Write-Verbose "Mode: Slow"
