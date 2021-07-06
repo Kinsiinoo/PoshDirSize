@@ -5,7 +5,7 @@
         HelpMessage="Enter the path to the folder you want to check.")]
         [String]$PoshDSPath,
         [Parameter(Position=1)]
-        [ValidateSet("Fast", "Slow")]
+        [ValidateSet("Fast (PS7)", "Fast", "Slow")]
         [String]$PoshDSMode = "Fast"
     )
 
@@ -94,6 +94,23 @@
     }
 
     switch ($PoshDSMode) {
+        "Fast (PS7)" {
+            if ($PSVersionTable.PSVersion.Major -like "7") {
+                # Dir_Item -> DirList
+                $Dir_Items | ForEach-Object -Parallel {
+                    $Dir_ChildItems = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($_.FullName)) -Recurse
+                    $Dir_Bytes = ($Dir_ChildItems | Measure-Object -Property Length -sum).Sum
+                    $Dir_Size = (ConvertTo-FileSize $Dir_Bytes)
+                    Add-ToDirList $_ $Dir_Bytes $Dir_Size
+                }
+
+                # File_Item -> FileList
+                $File_Items | ForEach-Object {
+                    $PoshDSTotal += $_.Length
+                    Add-ToFileList $_
+                }
+            }
+        }
         "Fast" {
             Write-Verbose "Mode: Fast"
             # Dir_Item -> DirList
