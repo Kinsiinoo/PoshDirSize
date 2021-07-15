@@ -106,7 +106,7 @@
                 }
 
                 # File_Item -> FileList
-                $File_Items | ForEach-Object {
+                $File_Items | ForEach-Object -Parallel {
                     $PoshDSTotal += $_.Length
                     Add-ToFileList $_
                 }
