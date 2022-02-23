@@ -10,12 +10,16 @@
     )
 
     # Variables
+    $mVersion = "0.1.1"
     $PoshDSOutPath = "C:\Temp\PoshDirSize\"
     $PoshDSTotal = $null
     $PoshDSRunTime = (Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
 
     [System.Collections.Generic.List[Object]]$FileList = @()
     [System.Collections.Generic.List[Object]]$DirList = @()
+
+    # Set WindowsTitle
+    $host.UI.RawUI.WindowTitle = "PoshDirSize (PowerShell Directory Size) - " + $mVersion
 
     # SW start
     $PoshDSSW = [Diagnostics.Stopwatch]::StartNew()
