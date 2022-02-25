@@ -47,8 +47,12 @@ Modes:
 
 ## Todo
 
-* [x] Switch between fast/resource saving mode :zap:/:deciduous_tree:
 * [ ] Generate some kind of chart :chart::bar_chart:
+* [ ] Faster file writer (.NET StreamWriter)
+* [ ] Switch for console output (enable/disable)
+* [ ] Search: Minimum and maximum file size
+* [ ] Search: Include/exclude file types
+* [x] Search: Switch between fast/resource saving mode (partly done) :zap:/:deciduous_tree:
 * [x] Refactor code into a nice PS module :eyes:
 
 ## Changelog
