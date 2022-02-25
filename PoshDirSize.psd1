@@ -23,7 +23,7 @@
     # CompanyName = 'Unknown'
     
     # Copyright statement for this module
-    Copyright = '(c) 2021 Daniel Zsiger.  All rights reserved.'
+    Copyright = '(c) 2022 Daniel Zsiger. All rights reserved.'
     
     # Description of the functionality provided by this module
     # Description = ''
