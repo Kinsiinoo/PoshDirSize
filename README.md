@@ -49,7 +49,9 @@ Modes:
 
 * [ ] Generate some kind of chart :chart::bar_chart:
 * [ ] Faster file writer (.NET StreamWriter)
-* [ ] Switch for console output (enable/disable)
+* [ ] Param: Switch for console output (enable/disable)
+* [ ] Param: OutPath
+* [ ] Param: OutFile, multiple naming format
 * [ ] Search: Minimum and maximum file size
 * [ ] Search: Include/exclude file types
 * [x] Search: Switch between fast/resource saving mode (partly done) :zap:/:deciduous_tree:
