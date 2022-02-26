@@ -59,7 +59,17 @@ Modes:
 
 ## Changelog
 
-WIP
+### v0.1.1
+
+* Refactored into a PS module
+* Added Fast/Slow mode (partly done)
+* Added some verbose logging
+* Escape special chars in path strings
+* Added output mode to console and .log file
+
+### Initial commit
+
+* Basic functionality
 
 ## License
 
