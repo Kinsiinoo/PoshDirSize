@@ -50,7 +50,7 @@ Modes:
 * [ ] Generate some kind of chart :chart::bar_chart:
 * [ ] Faster file writer (.NET StreamWriter)
 * [ ] Param: Switch for console output (enable/disable)
-* [ ] Param: OutPath
+* [x] Param: OutPath
 * [ ] Param: OutFile, multiple naming format
 * [ ] Search: Minimum and maximum file size
 * [ ] Search: Include/exclude file types
@@ -58,6 +58,11 @@ Modes:
 * [x] Refactor code into a nice PS module :eyes:
 
 ## Changelog
+
+### **v0.1.2 (WIP)**
+
+* Set WindowsTitle at start
+* Param: OutPath
 
 ### v0.1.1
 

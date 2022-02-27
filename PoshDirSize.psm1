@@ -4,14 +4,16 @@
         [Parameter(Mandatory=$true,Position=0,
         HelpMessage="Enter the path to the folder you want to check.")]
         [String]$PoshDSPath,
-        [Parameter(Position=1)]
+        [Parameter(Mandatory=$true,Position=1,
+        HelpMessage="Enter the path to the folder where you want to generate the log file.")]
+        [String]$PoshDSOutPath,
+        [Parameter(Position=2)]
         [ValidateSet("Fast", "Slow")]
         [String]$PoshDSMode = "Fast"
     )
 
     # Variables
     $mVersion = "0.1.1"
-    $PoshDSOutPath = "C:\Temp\PoshDirSize\"
     $PoshDSTotal = $null
     $PoshDSRunTime = (Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
 
