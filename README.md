@@ -1,4 +1,4 @@
-# PoshDirSize (PowerShell Directory Size) -  0.1.1
+# PoshDirSize (PowerShell Directory Size) -  0.1.2WIP
 
 <p align="center">
   <a href="https://github.com/Kinsiinoo/PoshDirSize"><img src="https://img.shields.io/github/languages/top/kinsiinoo/poshdirsize?style=for-the-badge"></a>
@@ -12,7 +12,7 @@
 </p>
 
 This PowerShell module allow you to generate disk usage statistics.
-The result will appear in the console and also in the newly created `C:\Temp\PoshDirSize\` folder as a `PoshDirSize_{yyyy-MM-dd-HH-mm-ss}.log` file.
+The result will appear in the console and also in the `OUTPATH` folder as a `PoshDirSize_{yyyy-MM-dd-HH-mm-ss}.log` file.
 
 ## Screenshots
 
@@ -21,29 +21,30 @@ WIP
 ## Syntax
 
 ```PowerShell
-Get-PoshDirSize [-PoshDSPath] <string> [[-PoshDSMode] {Fast | Slow}]  [<CommonParameters>]
+Get-PoshDirSize [-PoshDSPath] <string> [-PoshDSOutPath] <string> [-PoshDSMode {Fast | Slow}] [-PoshDSFileInc <string>] [-PoshDSFileExc <string>] [-PoshDSDirInc <string>] [-PoshDSDirExc <string>]  [<CommonParameters>]
 ```
 
-## Usage
+## Basic usage
 
 ```PowerShell
-Get-PoshDirSize PATH (MODE)
+Get-PoshDirSize PATH OUTPATH
 ```
-
-Mode is optional, but the default value is always `Fast`.
-
-Modes:
-
-* `Fast`: Faster, but more resource intensive.
-* `Slow`: Slower, but more resource efficient.
 
 ## Configuration
 
-* `$PoshDSOutPath` = Path of the output folder. Default value: `C:\Temp\PoshDirSize\`
+* `PoshDSMode` = Default value is always `Fast`.
+  * `Fast`: Faster, but more resource intensive. (`foreach`)
+  * `Slow`: Slower, but more resource efficient. (`ForEach-Object`)
+* `PoshDSFileInc` = Include files based on name and file format.
+  * Example: `*.log` or `DailyReport*.csv`
+* `PoshDSFileExc` = Exclude files based on name and file format.
+* `PoshDSDirInc` = Include dirs based on name.
+  * Example: `System32` or `2022*Pics`
+* `PoshDSDirExc` = Exclude dirs based on name.
 
 ### Advanced
 
-* `$PoshDSRunTime` = You can configure the date format modifying the `yyyy-MM-dd-HH-mm-ss` section.
+* `$PoshDSRunTime` = You can configure the date format modifying the `yyyy-MM-dd-HH-mm-ss` section inside the module code.
 
 ## Todo
 
