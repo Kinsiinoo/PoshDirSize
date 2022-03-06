@@ -55,8 +55,8 @@ Modes:
 * [x] Param: OutPath
 * [ ] Param: OutFile, multiple naming format
 * [ ] Search: Minimum and maximum file size
-* [ ] Search: Include/exclude file types
-* [ ] Search: Include/exclude attributes
+* [X] Search: Include/exclude files based on name and file format
+* [X] Search: Include/exclude dirs based on name
 * [ ] Search: Depth
 * [x] Search: Switch between fast/resource saving mode (partly done) :zap:/:deciduous_tree:
 * [x] Refactor code into a nice PS module :eyes:
@@ -75,6 +75,8 @@ Modes:
 
 * Set WindowsTitle at start
 * Param: OutPath
+* Search: Include/exclude files based on name and file format
+* Search: Include/exclude dirs based on name
 
 ### v0.1.1
 
