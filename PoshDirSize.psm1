@@ -1,19 +1,35 @@
 ﻿function Get-PoshDirSize {
     [CmdletBinding()]
     param (
+        [String]
         [Parameter(Mandatory=$true,Position=0,
         HelpMessage="Enter the path to the folder you want to check.")]
-        [String]$PoshDSPath,
+        $PoshDSPath,
+
+        [String]
         [Parameter(Mandatory=$true,Position=1,
         HelpMessage="Enter the path to the folder where you want to generate the log file.")]
-        [String]$PoshDSOutPath,
-        [Parameter(Position=2)]
+        $PoshDSOutPath,
+
+        [String]
         [ValidateSet("Fast", "Slow")]
-        [String]$PoshDSMode = "Fast"
+        $PoshDSMode = "Fast",
+
+        [String]
+        $PoshDSFileInc = "",
+
+        [String]
+        $PoshDSFileExc = "",
+
+        [String]
+        $PoshDSDirInc = "",
+
+        [String]
+        $PoshDSDirExc = ""
     )
 
     # Variables
-    $mVersion = "0.1.1"
+    $mVersion = "0.1.2WIP"
     $PoshDSTotal = $null
     $PoshDSRunTime = (Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
 
@@ -27,8 +43,8 @@
     $PoshDSSW = [Diagnostics.Stopwatch]::StartNew()
 
     Write-Verbose "Getting files and folders..."
-    $File_Items = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -File -Recurse
-    $Dir_Items = Get-ChildItem ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Directory -Recurse
+    $File_Items = Get-ChildItem -Path ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSFileInc -Exclude $PoshDSFileExc -File -Recurse
+    $Dir_Items = Get-ChildItem -Path ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSDirInc -Exclude $PoshDSDirExc -Directory -Recurse
 
     # Functions
     Function ConvertTo-FileSize {
