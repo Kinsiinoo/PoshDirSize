@@ -78,6 +78,7 @@ Get-PoshDirSize PATH OUTPATH
 * Param: OutPath
 * Search: Include/exclude files based on name and file format
 * Search: Include/exclude dirs based on name
+* Wrong variable type for include / exclude variables [#1](https://github.com/Kinsiinoo/PoshDirSize/issues/1)
 
 ### v0.1.1
 

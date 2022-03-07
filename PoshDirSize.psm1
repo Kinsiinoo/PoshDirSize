@@ -15,16 +15,16 @@
         [ValidateSet("Fast", "Slow")]
         $PoshDSMode = "Fast",
 
-        [String]
+        [String[]]
         $PoshDSFileInc = "",
 
-        [String]
+        [String[]]
         $PoshDSFileExc = "",
 
-        [String]
+        [String[]]
         $PoshDSDirInc = "",
 
-        [String]
+        [String[]]
         $PoshDSDirExc = ""
     )
 
