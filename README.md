@@ -56,12 +56,12 @@ Get-PoshDirSize PATH OUTPATH
 * [ ] Param: Switch for console output (enable/disable)
 * [x] Param: OutPath
 * [ ] Param: OutFile, multiple naming format
-* [ ] Search: Handle long paths
+* [x] Search: Handle long paths
 * [ ] Search: Handle long paths (UNC)
 * [ ] Search: Logic if directory / directories are excluded [#2](https://github.com/Kinsiinoo/PoshDirSize/issues/2)
 * [ ] Search: Minimum and maximum file size
-* [X] Search: Include/exclude files based on name and file format
-* [X] Search: Include/exclude dirs based on name
+* [x] Search: Include/exclude files based on name and file format
+* [x] Search: Include/exclude dirs based on name
 * [ ] Search: Depth
 * [x] Search: Switch between fast/resource saving mode (partly done) :zap:/:deciduous_tree:
 * [x] Refactor code into a nice PS module :eyes:
@@ -83,6 +83,7 @@ Get-PoshDirSize PATH OUTPATH
 * Search: Include/exclude files based on name and file format
 * Search: Include/exclude dirs based on name
 * Wrong variable type for include / exclude variables [#1](https://github.com/Kinsiinoo/PoshDirSize/issues/1)
+* Search: Handle long paths
 
 ### v0.1.1
 
