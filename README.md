@@ -52,9 +52,13 @@ Get-PoshDirSize PATH OUTPATH
 
 * [ ] Generate some kind of chart :chart::bar_chart:
 * [ ] Faster file writer (.NET StreamWriter)
+* [ ] Log: Extend the summary with data from new variables
 * [ ] Param: Switch for console output (enable/disable)
 * [x] Param: OutPath
 * [ ] Param: OutFile, multiple naming format
+* [ ] Search: Handle long paths
+* [ ] Search: Handle long paths (UNC)
+* [ ] Search: Logic if directory / directories are excluded [#2](https://github.com/Kinsiinoo/PoshDirSize/issues/2)
 * [ ] Search: Minimum and maximum file size
 * [X] Search: Include/exclude files based on name and file format
 * [X] Search: Include/exclude dirs based on name
