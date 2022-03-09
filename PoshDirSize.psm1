@@ -25,7 +25,10 @@
         $PoshDSDirInc = "",
 
         [String[]]
-        $PoshDSDirExc = ""
+        $PoshDSDirExc = "",
+
+        [Switch]
+        $LongPath
     )
 
     # Variables
