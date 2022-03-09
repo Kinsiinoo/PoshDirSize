@@ -46,8 +46,13 @@
     $PoshDSSW = [Diagnostics.Stopwatch]::StartNew()
 
     Write-Verbose "Getting files and folders..."
-    $File_Items = Get-ChildItem -LiteralPath ("\\?\" + [Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSFileInc -Exclude $PoshDSFileExc -File -Recurse
-    $Dir_Items = Get-ChildItem -LiteralPath ("\\?\" + [Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSDirInc -Exclude $PoshDSDirExc -Directory -Recurse
+    If ($LongPath) {
+        $File_Items = Get-ChildItem -LiteralPath ("\\?\" + [Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -File -Recurse
+        $Dir_Items = Get-ChildItem -LiteralPath ("\\?\" + [Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Directory -Recurse
+    } Else {
+        $File_Items = Get-ChildItem -Path ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSFileInc -Exclude $PoshDSFileExc -File -Recurse
+        $Dir_Items = Get-ChildItem -Path ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSDirInc -Exclude $PoshDSDirExc -Directory -Recurse
+    }
 
     # Functions
     Function ConvertTo-FileSize {
