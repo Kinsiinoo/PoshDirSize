@@ -1,33 +1,48 @@
 ﻿function Get-PoshDirSize {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "UseIncExc")]
     param (
         [String]
         [Parameter(Mandatory=$true,Position=0,
-        HelpMessage="Enter the path to the folder you want to check.")]
+        HelpMessage="Enter the path to the folder you want to check.",
+        ParameterSetName="UseIncExc")]
+        [Parameter(Mandatory=$true,Position=0,
+        HelpMessage="Enter the path to the folder you want to check.",
+        ParameterSetName="SearchInLongPath")]
         $PoshDSPath,
 
         [String]
         [Parameter(Mandatory=$true,Position=1,
-        HelpMessage="Enter the path to the folder where you want to generate the log file.")]
+        HelpMessage="Enter the path to the folder where you want to generate the log file.",
+        ParameterSetName="UseIncExc")]
+        [Parameter(Mandatory=$true,Position=1,
+        HelpMessage="Enter the path to the folder where you want to generate the log file.",
+        ParameterSetName="SearchInLongPath")]
         $PoshDSOutPath,
 
         [String]
+        [Parameter(ParameterSetName="UseIncExc")]
+        [Parameter(ParameterSetName="SearchInLongPath")]
         [ValidateSet("Fast", "Slow")]
         $PoshDSMode = "Fast",
 
         [String[]]
+        [Parameter(ParameterSetName="UseIncExc")]
         $PoshDSFileInc = "",
 
         [String[]]
+        [Parameter(ParameterSetName="UseIncExc")]
         $PoshDSFileExc = "",
 
         [String[]]
+        [Parameter(ParameterSetName="UseIncExc")]
         $PoshDSDirInc = "",
 
         [String[]]
+        [Parameter(ParameterSetName="UseIncExc")]
         $PoshDSDirExc = "",
 
         [Switch]
+        [Parameter(ParameterSetName="SearchInLongPath")]
         $LongPath
     )
 
