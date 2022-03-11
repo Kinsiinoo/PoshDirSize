@@ -193,6 +193,8 @@
 
     # Path, OutPath, Mode, Inc/Exc, Grand Total, Elapsed time output to console and .log
     Write-Verbose "Outputting Path, OutPath, Mode, Inc/Exc, Grand Total, Elapsed time to console and .log file..."
+
+    # --- Console ---
     Write-Host "`nPath: " -NoNewline -ForegroundColor Cyan
     ([Management.Automation.WildcardPattern]::Escape($PoshDSPath))
 
@@ -212,6 +214,17 @@
     Write-Host "Elapsed time: " -NoNewline -ForegroundColor Magenta
     Write-Host "$($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)"
 
-    "Path: $(([Management.Automation.WildcardPattern]::Escape($PoshDSPath)))`nOutPath: $(([Management.Automation.WildcardPattern]::Escape($PoshDSOutPath)))`nMode: $($PoshDSMode)`nFileInc: $($PoshDSFileInc) FileExc: $($PoshDSFileExc) DirInc: $($PoshDSDirInc) DirExc: $($PoshDSDirExc)`nGrand Total: $(ConvertTo-FileSize $PoshDSTotal)`nElapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    # --- LOG ---
+    "Path: " + ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    "OutPath: " + ([Management.Automation.WildcardPattern]::Escape($PoshDSOutPath)) | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    "Mode: " + $PoshDSMode | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    
+    if ($PSCmdlet.ParameterSetName -eq "UseIncExc") {
+        "FileInc: " + $PoshDSFileInc + "FileExc: " + $PoshDSFileExc + "DirInc: " + $PoshDSDirInc + "DirExc: " + $PoshDSDirExc | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    }
+
+    "Grand Total: " + (ConvertTo-FileSize $PoshDSTotal) | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    "Elapsed time: $($PoshDSSW.Elapsed.Hours):$($PoshDSSW.Elapsed.Minutes):$($PoshDSSW.Elapsed.Seconds).$($PoshDSSW.Elapsed.Milliseconds)" | Out-File -FilePath "$($PoshDSOutPath)\PoshDirSize_$($PoshDSRunTime).log" -Encoding utf8 -Append -Width 1000
+    
     Write-Verbose "Completed!"
 }
