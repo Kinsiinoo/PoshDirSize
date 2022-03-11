@@ -21,7 +21,11 @@ WIP
 ## Syntax
 
 ```PowerShell
-Get-PoshDirSize [-PoshDSPath] <string> [-PoshDSOutPath] <string> [-PoshDSMode {Fast | Slow}] [-PoshDSFileInc <string>] [-PoshDSFileExc <string>] [-PoshDSDirInc <string>] [-PoshDSDirExc <string>]  [<CommonParameters>]
+Get-PoshDirSize [-PoshDSPath] <string> [-PoshDSOutPath] <string> [-PoshDSMode {Fast | Slow}] [-PoshDSFileInc <string[]>] [-PoshDSFileExc <string[]>] [-PoshDSDirInc <string[]>] [-PoshDSDirExc <string[]>]  [<CommonParameters>]
+```
+
+```PowerShell
+Get-PoshDirSize [-PoshDSPath] <string> [-PoshDSOutPath] <string> [-PoshDSMode {Fast | Slow}] [-LongPath]  [<CommonParameters>]
 ```
 
 ## Basic usage
@@ -36,11 +40,12 @@ Get-PoshDirSize PATH OUTPATH
   * `Fast`: Faster, but more resource intensive. (`foreach`)
   * `Slow`: Slower, but more resource efficient. (`ForEach-Object`)
 * `PoshDSFileInc` = Include files based on name and file format.
-  * Example: `*.log` or `DailyReport*.csv`
+  * Example: `*.log, *.txt` or `DailyReport*.csv`
 * `PoshDSFileExc` = Exclude files based on name and file format.
 * `PoshDSDirInc` = Include dirs based on name.
-  * Example: `System32` or `2022*Pics`
+  * Example: `System32, Users` or `2022*Pics`
 * `PoshDSDirExc` = Exclude dirs based on name.
+* `LongPath` = Include and correctly parse long paths.
 
 ### Advanced
 
@@ -59,7 +64,7 @@ Get-PoshDirSize PATH OUTPATH
 * [x] Search: Handle long paths
 * [ ] Search: Handle long paths (UNC)
 * [ ] Search: Logic if directory / directories are excluded [#2](https://github.com/Kinsiinoo/PoshDirSize/issues/2)
-* [ ] Search: Switch between Path and LiteralPath [#3](https://github.com/Kinsiinoo/PoshDirSize/issues/3)
+* [x] Search: Switch between Path and LiteralPath [#3](https://github.com/Kinsiinoo/PoshDirSize/issues/3)
 * [ ] Search: Minimum and maximum file size
 * [x] Search: Include/exclude files based on name and file format
 * [x] Search: Include/exclude dirs based on name
@@ -86,6 +91,7 @@ Get-PoshDirSize PATH OUTPATH
 * Wrong variable type for include / exclude variables [#1](https://github.com/Kinsiinoo/PoshDirSize/issues/1)
 * Search: Handle long paths
 * Log: Extend the summary with data from new variables
+* Search: Switch between Path and LiteralPath [#3](https://github.com/Kinsiinoo/PoshDirSize/issues/3)
 
 ### v0.1.1
 
