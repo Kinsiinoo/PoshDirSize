@@ -202,7 +202,9 @@
     Write-Host "Mode: " -NoNewline -ForegroundColor Cyan
     $PoshDSMode
 
-    Write-Host "FileInc: $($PoshDSFileInc) FileExc: $($PoshDSFileExc) DirInc: $($PoshDSDirInc) DirExc: $($PoshDSDirExc)" -ForegroundColor Cyan
+    if ($PSCmdlet.ParameterSetName -eq "UseIncExc") {
+        Write-Host "FileInc: $($PoshDSFileInc) FileExc: $($PoshDSFileExc) DirInc: $($PoshDSDirInc) DirExc: $($PoshDSDirExc)" -ForegroundColor Cyan
+    }
 
     Write-Host "Grand Total: " -NoNewline -ForegroundColor Yellow
     ConvertTo-FileSize $PoshDSTotal
