@@ -62,9 +62,11 @@
 
     Write-Verbose "Getting files and folders..."
     If ($LongPath) {
+        Write-Verbose "Active LongPath switch: Also searching in long paths..."
         $File_Items = Get-ChildItem -LiteralPath ("\\?\" + [Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -File -Recurse
         $Dir_Items = Get-ChildItem -LiteralPath ("\\?\" + [Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Directory -Recurse
     } Else {
+        Write-Verbose "Using Includes and Excudes if any..."
         $File_Items = Get-ChildItem -Path ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSFileInc -Exclude $PoshDSFileExc -File -Recurse
         $Dir_Items = Get-ChildItem -Path ([Management.Automation.WildcardPattern]::Escape($PoshDSPath)) -Include $PoshDSDirInc -Exclude $PoshDSDirExc -Directory -Recurse
     }
